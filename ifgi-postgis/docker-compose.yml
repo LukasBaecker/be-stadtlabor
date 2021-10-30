@@ -2,7 +2,8 @@
 version: '3'
 services:
   database:
-    image: postgis/postgis # use latest official postgres version
+    image:postgis/postgis:12-master 
+    restart: unless-stopped
     env_file:
       - database.env # configure postgres
     volumes:
