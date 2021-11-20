@@ -22,11 +22,6 @@ class User(models.Model):
     def __str__(self):
         return self.username
     
-
-    def __str__(self):
-        return self.username
-
-
 class Privilege(models.Model):
     privilege_id = models.AutoField(primary_key=True)
     PRIVILEGE_CHOICES = (
