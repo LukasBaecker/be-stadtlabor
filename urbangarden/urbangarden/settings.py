@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_gis',
     'users',
+    'crops',
+    'gardens',
+    'events',
+    
 ]
 
 MIDDLEWARE = [
