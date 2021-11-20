@@ -14,13 +14,13 @@ class Garden(models.Model):
     description = models.TextField(max_length=400)
     email = models.EmailField(max_length=100, unique=True, null=False)
     phone = models.CharField(max_length=20)
-    crops= models.ManyToMany(Crop)
+    crops= models.ManyToManyField(Crop)
     #event = models.OneToMany('Event', on_delete=models.PROTECT, null=True)
 
     def __str__(self):
         return self.name
     
-    
+
 class Resource(models.Model):
     resource_id = models.AutoField(primary_key=True)
     STATUS_CHOICES = (
@@ -32,12 +32,12 @@ class Resource(models.Model):
     category = models.ForeignKey('Category', on_delete=models.PROTECT, null=False)
     date_created = models.DateTimeField(auto_now_add=True)
     count = models.IntegerField()
-    garden = models.ForeignKey('Garden',on_delete=models.PROTECT,null=False)
+    garden = models.ForeignKey(Garden,on_delete=models.PROTECT,null=False)
 
     def __str__(self):
         return self.resource_name
 
-
+ #Author: Brian Pondi, Javier Martin and Nivedita Vee
 class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
     CATEGORY_CHOICES=(("TOOLS",'Tools'),
