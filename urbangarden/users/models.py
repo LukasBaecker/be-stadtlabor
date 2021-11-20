@@ -1,4 +1,5 @@
 from django.db import models
+from gardens.models import Garden
 
 # Create your models here.
 
@@ -17,7 +18,7 @@ class User(models.Model):
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     privilege = models.OneToOneField('Privilege', on_delete=models.PROTECT, null=False)
-    # garden = models.ForeignKey('Garden', on_delete=models.PROTECT, null=True)
+    garden = models.ForeignKey(Garden, on_delete=models.PROTECT, null=True)
 
     def __str__(self):
         return self.username
