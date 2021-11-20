@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user',
+    'rest_framework',
+    'rest_framework_gis',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -73,11 +75,14 @@ WSGI_APPLICATION = 'urbangarden.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'urbangarden', #YOUR_DATABASE_NAME
+        'USER': 'postgres', #YOUR_USER_NAME
+        'PASSWORD': 'postgres',#YOUR_DB_PASSWORD
+        'HOST': 'giv-project15.uni-muenster.de', #HOST
+        'PORT': '5432'   #PORT
     }
 }
 
@@ -119,3 +124,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#GDAL_LIBRARY_PATH='/opt/homebrew/Cellar/gdal/3.3.3'
