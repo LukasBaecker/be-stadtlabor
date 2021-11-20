@@ -25,7 +25,7 @@ SECRET_KEY = '%i5*%7%zlim4#m%9y^+m$#-mqd0a$1l0m977%)yrwt&-gc1*2c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['giv-project15.uni-muenster.de']
 
 
 # Application definition
