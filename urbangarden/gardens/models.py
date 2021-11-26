@@ -16,7 +16,7 @@ class Garden(models.Model):
     email = models.EmailField(max_length=100, unique=True, null=False)
     phone = models.CharField(max_length=20)
     crops= models.ManyToManyField(Crop)
-    address = models.CharField(max_length=255)
+    address = models.CharField(max_length=255, null = True)
     #members = models.ManyToManyField(User, through=GardenMembership, related_name='gardens')
     #event = models.OneToMany('Event', on_delete=models.PROTECT, null=True)
 
@@ -34,7 +34,7 @@ class Resource(models.Model):
     resource_name = models.CharField(max_length=100)
     category = models.ForeignKey('Category', on_delete=models.PROTECT, null=False)
     date_created = models.DateTimeField(auto_now_add=True)
-    return_date = models.DateTimeField() 
+    return_date = models.DateTimeField(null = True) 
     garden = models.ForeignKey(Garden,on_delete=models.PROTECT,null=False)
 
     def __str__(self):
