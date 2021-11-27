@@ -25,7 +25,7 @@ SECRET_KEY = '%i5*%7%zlim4#m%9y^+m$#-mqd0a$1l0m977%)yrwt&-gc1*2c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['giv-project15.uni-muenster.de']
+ALLOWED_HOSTS = ['giv-project15.uni-muenster.de','*']
 
 
 # Application definition
@@ -129,4 +129,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#GDAL_LIBRARY_PATH='/opt/homebrew/Cellar/gdal/3.3.3'
+#Brian's Path
+#GDAL_LIBRARY_PATH='/opt/homebrew/Cellar/gdal/3.3.3' 
+#Javier's Path
+GDAL_LIBRARY_PATH= 'C:/Users/jmmartin/.5 Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/gdal303.dll'
+
