@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'urbangarden.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'urbangarden', #YOUR_DATABASE_NAME
+        'NAME': 'gardening', #YOUR_DATABASE_NAME
         'USER': 'postgres', #YOUR_USER_NAME
         'PASSWORD': 'postgres',#YOUR_DB_PASSWORD
         'HOST': 'giv-project15.uni-muenster.de', #HOST
@@ -129,8 +129,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+#User Issues - Brian 
+AUTH_USER_MODEL = "users.User" 
+
 #Brian's Path
 #GDAL_LIBRARY_PATH='/opt/homebrew/Cellar/gdal/3.3.3' 
 #Javier's Path
-GDAL_LIBRARY_PATH= 'C:/Users/jmmartin/.5 Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/gdal303.dll'
+#GDAL_LIBRARY_PATH= 'C:/Users/jmmartin/.5 Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/gdal303.dll'
+
+
 
