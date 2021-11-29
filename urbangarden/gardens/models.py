@@ -17,8 +17,7 @@ class Garden(models.Model):
     phone = models.CharField(max_length=20)
     crops= models.ManyToManyField(Crop)
     address = models.CharField(max_length=255, null = True)
-    #members = models.ManyToManyField(User, through=GardenMembership, related_name='gardens')
-    #event = models.OneToMany('Event', on_delete=models.PROTECT, null=True)
+    members = models.ManyToManyField('users.User', through='users.GardenMembership', related_name='gardens')
 
     def __str__(self):
         return self.name

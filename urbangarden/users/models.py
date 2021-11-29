@@ -1,12 +1,13 @@
 from django.db import models
 from gardens.models import Garden
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
+
 
 # Create your models here.
 
 #Author: Brian Pondi - 20/11/2021
 
-class User(models.Model):
+class User(AbstractUser):
     user_id = models.AutoField(primary_key=True, editable=False)
     password = models.CharField(max_length=50)
     first_name = models.CharField(max_length=100)
@@ -17,7 +18,7 @@ class User(models.Model):
     is_logged_in = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
-    #garden = models.ManyToManyField(Garden, on_delete=models.PROTECT, null=True)
+    garden = models.ManyToManyField('gardens.Garden')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -30,8 +31,8 @@ class GardenMembership(models.Model):
         ('1', 'Admin'),
         ('2', 'Member'),
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    garden = models.ForeignKey(Garden, on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    garden = models.ForeignKey('gardens.Garden', on_delete=models.CASCADE)
     role = models.CharField(choices=ROLE_CHOICE, default='2', max_length=1)
 
 
