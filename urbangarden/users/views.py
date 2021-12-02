@@ -1,14 +1,39 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.schemas import AutoSchema
 from .serializers import UserSerializer
 from .models import User
 import jwt, datetime
+import coreapi
 
 # Brian Pondi - 02/12/2021
 
+#CoreAPI schema 
+
+class RegisterViewSchema(AutoSchema):
+
+    def get_manual_fields(self, path, method):
+        extra_fields = []
+        if method.lower() in ['post']:
+            extra_fields = [
+                coreapi.Field('first_name'),
+                coreapi.Field('last_name'),
+                coreapi.Field('email'),
+                coreapi.Field('password'),
+                coreapi.Field('contact'),
+            ]
+        manual_fields = super().get_manual_fields(path, method)
+        return manual_fields + extra_fields
+
+
+
+
+#ApiViews
+
 class RegisterView(APIView):
     def post(self, request):
+        schema = RegisterViewSchema()
         serializer = UserSerializer(data = request.data)
         serializer.is_valid(raise_exception = True)
         serializer.save()

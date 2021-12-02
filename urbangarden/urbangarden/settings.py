@@ -137,6 +137,8 @@ AUTH_USER_MODEL = "users.User"
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
+REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS' : 'rest_framework.schemas.coreapi.AutoSchema'}
+
 #Brian's Path
 #GDAL_LIBRARY_PATH='/opt/homebrew/Cellar/gdal/3.3.3' 
 #Javier's Path
