@@ -1,5 +1,6 @@
 from django.db import models
 
+
 #Author: Nivedita Vee - 20/11/2021
 
 class Crop(models.Model):
@@ -7,8 +8,7 @@ class Crop(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(max_length=500)
     characteristics = models.TextField(max_length=500)
-    image = models.ImageField()
-
+    image = models.ImageField(upload_to='images/')
     def __str__(self):
         return self.name
     
