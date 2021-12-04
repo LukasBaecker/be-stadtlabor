@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -143,6 +144,9 @@ REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS' : 'rest_framework.schemas.coreapi.AutoS
 #GDAL_LIBRARY_PATH='/opt/homebrew/Cellar/gdal/3.3.3' 
 #Javier's Path
 #GDAL_LIBRARY_PATH= 'C:/Users/jmmartin/.5 Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/gdal303.dll'
-
-
+#Nivedita's Path
+#GDAL_LIBRARY_PATH='C:/Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/gdal303.dll'
+#GEOS_LIBRARY_PATH='C:/Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/geos_c.dll'
+MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
