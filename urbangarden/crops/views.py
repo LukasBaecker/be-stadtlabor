@@ -12,11 +12,11 @@ from rest_framework.decorators import api_view
 
 # Create your views here.
 @api_view(['GET'])
-def getcrops(self, request, format=None):
+def getcrops(request):
         """
         Return a list of all crops.
         """
         if request.method == 'GET':
-         crops = Crop.objects.all()
-         crop_serializer = CropSerializer(crops, many=True)
-         return JsonResponse(crop_serializer.data, safe=False)
+           crops = Crop.objects.all()
+           crop_serializer = CropSerializer(crops, many=True)
+           return JsonResponse(crop_serializer.data, safe=False)
