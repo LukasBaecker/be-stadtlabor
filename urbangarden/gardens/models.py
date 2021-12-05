@@ -9,13 +9,13 @@ class Garden(models.Model):
     longitude = models.FloatField(max_length=255, null=False)
     latitude = models.FloatField(max_length=255, null=False)
     name = models.CharField(max_length=255, null=False)
-    description = models.TextField(max_length=400)
+    description = models.TextField(max_length=1000)
     email = models.EmailField(max_length=255, unique=True, null=False)
     phone = models.CharField(max_length=255)
     crops= models.ManyToManyField(Crop)
     address = models.CharField(max_length=255, null = True)
-    geom_point =models.PointField(blank=True, null=True)
-    geom_polygon = models.PolygonField(blank=True, null=True)
+    #geom_point =models.PointField(blank=True, null=True)
+    #geom_polygon = models.PolygonField(blank=True, null=True)
     PURPOSE_CHOICES = (
         ("GARDEN", "Garden"),
         ("RESOURCES", "Resources"))

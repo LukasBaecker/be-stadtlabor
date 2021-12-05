@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'crops',
     'gardens',
     'events',
+    'django.contrib.gis',
     
 ]
 
@@ -142,7 +143,7 @@ REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS' : 'rest_framework.schemas.coreapi.AutoS
 #Brian's Path
 #GDAL_LIBRARY_PATH='/opt/homebrew/Cellar/gdal/3.3.3' 
 #Javier's Path
-#GDAL_LIBRARY_PATH= 'C:/Users/jmmartin/.5 Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/gdal303.dll'
+GDAL_LIBRARY_PATH= 'C:/Users/jmmartin/.5 Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/gdal303.dll'
 
 
 
