@@ -11,16 +11,16 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='garden',
-            name='geom_point',
-            field=django.contrib.gis.db.models.fields.PointField(blank=True, null=True, srid=4326),
-        ),
-        migrations.AddField(
-            model_name='garden',
-            name='geom_polygon',
-            field=django.contrib.gis.db.models.fields.PolygonField(blank=True, null=True, srid=4326),
-        ),
+      #  migrations.AddField(
+      #      model_name='garden',
+      #      name='geom_point',
+      #      field=django.contrib.gis.db.models.fields.PointField(blank=True, null=True, srid=4326),
+      #  ),
+      #  migrations.AddField(
+      #      model_name='garden',
+      #      name='geom_polygon',
+      #      field=django.contrib.gis.db.models.fields.PolygonField(blank=True, null=True, srid=4326),
+      #  ),
         migrations.AddField(
             model_name='garden',
             name='primary_purpose',

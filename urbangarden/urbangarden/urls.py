@@ -23,6 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('users.urls')),
+    path('api/v1/gardens/',include('gardens.urls')),
     path('api/v1/crops/',include('crops.urls')),
     path('api/v1/events/',include('events.urls')),
     path('docs/', include_docs_urls(title=' CityLab Urban Gardening Project - Muenster API')),
