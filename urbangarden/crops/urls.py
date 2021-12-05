@@ -4,11 +4,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from crops.views import *
 from django.conf.urls import url 
-from .views import ListCrops
+from crops import views 
  
-  
 urlpatterns = [ 
-    url('', ListCrops.as_view()),
+    url('', views.getcrops),
     
 ]
   
