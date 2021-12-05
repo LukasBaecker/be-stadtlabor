@@ -17,11 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.schemas import get_schema_view
 from rest_framework.documentation import include_docs_urls
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('users.urls')),
-    path('api/v1/',include('gardens.urls')),
+    path('api/v1/gardens/',include('gardens.urls')),
+    path('api/v1/crops/',include('crops.urls')),
+    path('api/v1/events/',include('events.urls')),
     path('docs/', include_docs_urls(title=' CityLab Urban Gardening Project - Muenster API')),
     path('schema', get_schema_view(
         title='CityLab Urban Gardening Project',
@@ -29,3 +33,7 @@ urlpatterns = [
         version='1.0.0'
     ), name='openapi-schema'),
 ]
+
+if settings.DEBUG:
+        urlpatterns += static(settings.MEDIA_URL,
+                              document_root=settings.MEDIA_ROOT)
