@@ -12,6 +12,48 @@ from .serializers import GardenSerializer, ResourceSerializer
 
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
+import coreapi
+from rest_framework.schemas import AutoSchema
+
+
+#CoreAPI schema -> Brian Pondi 
+
+class GardenViewSchema(AutoSchema):
+
+    def get_manual_fields(self, path, method):
+        extra_fields = []
+        if method.lower() in ['post', 'put']:
+            extra_fields = [
+                coreapi.Field('longitude '),
+                coreapi.Field('latitude'),
+                coreapi.Field('name'),
+                coreapi.Field('description'),
+                coreapi.Field('email'),
+                coreapi.Field('phone'),
+                coreapi.Field('crops'),
+                coreapi.Field('address'),
+                coreapi.Field('primary_purpose'),
+                coreapi.Field('members'),
+            ]
+        manual_fields = super().get_manual_fields(path, method)
+        return manual_fields + extra_fields
+
+class ResourceViewSchema(AutoSchema):
+
+    def get_manual_fields(self, path, method):
+        extra_fields = []
+        if method.lower() in ['post', 'put']:
+            extra_fields = [
+                coreapi.Field('resource_status'),
+                coreapi.Field('resource_name'),
+                coreapi.Field('category'),
+                coreapi.Field('date_created'),
+                coreapi.Field('return_date'),
+                coreapi.Field('garden'),
+            ]
+        manual_fields = super().get_manual_fields(path, method)
+        return manual_fields + extra_fields
+
 
 #Javier Martín - 04/12/2021
 
@@ -21,7 +63,7 @@ from rest_framework.decorators import api_view
 # 1 of 2: request for all ['GET', 'POST', 'DELETE']
 @api_view(['GET', 'POST', 'DELETE'])
 def garden_all(request):
-
+    schema =GardenViewSchema()
     if request.method == 'GET':
         gardens = Garden.objects.all()
         garden_serializer = GardenSerializer(gardens, many=True)
@@ -44,6 +86,7 @@ def garden_all(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def garden_ID(request, pk):
+    schema =GardenViewSchema()
     try: 
         garden = Garden.objects.get(pk=pk) 
     except Garden.DoesNotExist: 
@@ -70,7 +113,7 @@ def garden_ID(request, pk):
 # 1 of 2: request for all ['GET', 'POST', 'DELETE']
 @api_view(['GET', 'POST', 'DELETE'])
 def resource_all(request):
-
+    schema =ResourceViewSchema()
     if request.method == 'GET':
         resources = Resource.objects.all()
         resource_serializer = ResourceSerializer(resources, many=True)
@@ -93,6 +136,7 @@ def resource_all(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def resource_ID(request, pk):
+    schema =ResourceViewSchema()
     try: 
         resource = Resource.objects.get(pk=pk) 
     except Resource.DoesNotExist: 
