@@ -17,8 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.schemas import get_schema_view
 from rest_framework.documentation import include_docs_urls
+from rest_framework_swagger.views import get_swagger_view
 from django.conf import settings
 from django.conf.urls.static import static
+
+schema_view = get_swagger_view('IFGI CityLab Urban Gardening Project for Resource Sharing - Muenster API')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,12 +29,8 @@ urlpatterns = [
     path('api/v1/gardens/',include('gardens.urls')),
     path('api/v1/crops/',include('crops.urls')),
     path('api/v1/events/',include('events.urls')),
-    path('docs/', include_docs_urls(title=' CityLab Urban Gardening Project - Muenster API')),
-    path('schema', get_schema_view(
-        title='CityLab Urban Gardening Project',
-        description='API for CityLab Urban Gardening Project',
-        version='1.0.0'
-    ), name='openapi-schema'),
+    path('',schema_view),
+    path('accounts/', include('rest_framework.urls')),
 ]
 
 if settings.DEBUG:

@@ -15,9 +15,35 @@ from events.models import Event
 from events.serializers import EventSerializer
 from rest_framework.decorators import api_view
 
+import coreapi
+from rest_framework.schemas import AutoSchema
 
+
+#CoreAPI schema -> Brian Pondi 
+
+class EventViewSchema(AutoSchema):
+
+    def get_manual_fields(self, path, method):
+        extra_fields = []
+        if method.lower() in ['post', 'put']:
+            extra_fields = [
+                coreapi.Field('title'),
+                coreapi.Field('description'),
+                coreapi.Field('name'),
+                coreapi.Field('description'),
+                coreapi.Field('venue'),
+                coreapi.Field('date'),
+                coreapi.Field('duration'),
+                coreapi.Field('garden'),
+            ]
+        manual_fields = super().get_manual_fields(path, method)
+        return manual_fields + extra_fields
+
+
+#Nivedita Vee
 @api_view(['GET', 'POST', 'DELETE'])
 def event_list(request):
+    schema =EventViewSchema()
     if request.method == 'GET':
         events = Event.objects.all()
         event_serializer = EventSerializer(events, many=True)
@@ -42,6 +68,7 @@ def event_list(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 
 def event_detail(request, pk):
+    schema =EventViewSchema()
     try: 
         event = Event.objects.get(pk=pk) 
     except Event.DoesNotExist: 
