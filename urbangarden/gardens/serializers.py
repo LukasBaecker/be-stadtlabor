@@ -1,3 +1,4 @@
+from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from rest_framework import serializers
 from .models import Garden,Resource
 
@@ -5,11 +6,9 @@ from .models import Garden,Resource
 class GardenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Garden
-        fields = ['garden_id', 'longitude', 'latitude',
-                  'name', 'description', 'email', 
-                  'phone', 'crops', 'address', 
-                  #'geom_point', #'geom_polygon'
-        ]
+        geo_field = ['geom_point', 'geom_polygon']
+        fields = ('__all__')
+        
 
 # Resource
 class ResourceSerializer(serializers.ModelSerializer):
