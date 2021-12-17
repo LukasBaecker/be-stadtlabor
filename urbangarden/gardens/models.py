@@ -14,8 +14,8 @@ class Garden(models.Model):
     phone = models.CharField(max_length=255)
     crops= models.ManyToManyField(Crop)
     address = models.CharField(max_length=255, null = True)
-    #geom_point =models.PointField(blank=True, null=True)
-    #geom_polygon = models.PolygonField(blank=True, null=True)
+    geom_point =models.PointField(null=True, blank=True, srid=4326)
+    geom_polygon = models.PolygonField(null=True, blank=True, srid=4326)
     PURPOSE_CHOICES = (
         ("GARDEN", "Garden"),
         ("RESOURCES", "Resources"))
