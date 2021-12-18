@@ -1,8 +1,9 @@
 from django.conf.urls import url 
-from events import views 
- 
-urlpatterns = [ 
-    url('', views.event_list),
-    url('pk', views.event_detail),
-    
+from .views import EventView
+from django.urls import path, include
+urlpatterns = [
+    path('', EventView.as_view()),
+    path('pk', EventView.as_view()),
+
 ]
+ 
