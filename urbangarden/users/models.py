@@ -31,3 +31,6 @@ class GardenMembership(models.Model):
     role = models.CharField(choices=ROLE_CHOICE, default='2', max_length=10)
 
 
+class PasswordReset(models.Model):
+    email = models.CharField(max_length=250)
+    token = models.CharField(max_length=255, unique=True)

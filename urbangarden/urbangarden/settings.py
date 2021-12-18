@@ -165,3 +165,7 @@ REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS' : 'rest_framework.schemas.coreapi.AutoS
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'\
 
+
+EMAIL_HOST = '0.0.0.0'
+EMAIL_PORT = 1025
+
