@@ -1,9 +1,10 @@
+from django.core.mail import send_mail
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.exceptions import AuthenticationFailed, APIException, NotFound
 from .serializers import UserSerializer
-from .models import User
-import jwt, datetime
+from .models import User, PasswordReset
+import jwt, datetime, random, string
 import coreapi
 from rest_framework.schemas import AutoSchema
 
@@ -40,6 +41,29 @@ class LoginViewSchema(AutoSchema):
         manual_fields = super().get_manual_fields(path, method)
         return manual_fields + extra_fields
 
+class ForgotPasswordViewSchema(AutoSchema):
+
+    def get_manual_fields(self, path, method):
+        extra_fields = []
+        if method.lower() in ['post']:
+            extra_fields = [
+                coreapi.Field('email'),
+            ]
+        manual_fields = super().get_manual_fields(path, method)
+        return manual_fields + extra_fields
+
+class ResetPasswordViewSchema(AutoSchema):
+
+    def get_manual_fields(self, path, method):
+        extra_fields = []
+        if method.lower() in ['post']:
+            extra_fields = [
+                coreapi.Field('token'),
+                coreapi.Field('password'),
+                coreapi.Field('password_confirm'),
+            ]
+        manual_fields = super().get_manual_fields(path, method)
+        return manual_fields + extra_fields
 
 
 
@@ -111,3 +135,46 @@ class LogoutView(APIView):
             'message': 'success'
         }
         return response
+
+class ForgotPasswordView(APIView):
+    schema = ForgotPasswordViewSchema()
+    def post(self, request):
+        email = request.data['email']
+        token = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(12))
+
+        PasswordReset.objects.create(email=email, token=token)
+
+        send_mail(
+            subject='Reset your password', 
+            message='Click <a href="http://giv-project15:9000/reset/' + token + '">here</a> to reset your password',
+            from_email='admin@urbangarden.com',
+            recipient_list=[email]
+        )
+
+        return Response({
+            'message' : 'Please check your email'
+        })
+
+class ResetPasswordView(APIView):
+    schema = ResetPasswordViewSchema()
+    def post(self, request):
+        data = request.data
+
+        if data['password'] != data['password_confirm']:
+            raise APIException('Passwords do not match')
+
+        passwordReset = PasswordReset.objects.filter(token=data['token']).first()
+
+        user = User.objects.filter(email=passwordReset.email).first()
+
+        if not user:
+            raise NotFound('User not found')
+        
+        user.set_password(data['password'])
+        user.save()
+
+        return Response({
+            'message': 'Password changed successfully'
+        })
+
+
