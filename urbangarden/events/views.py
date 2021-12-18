@@ -41,21 +41,22 @@ class EventViewSchema(AutoSchema):
 
 
 #Nivedita Vee
+
 class EventView(APIView):
-   schema =EventViewSchema()
-   def event_list(request):
+    schema =EventViewSchema()
+    def get(self,request):
    
-    if request.method == 'GET':
+       if request.method == 'GET':
         events = Event.objects.all()
         event_serializer = EventSerializer(events, many=True)
         return JsonResponse(event_serializer.data, safe=False)
         # 'safe=False' for objects serialization
- 
-    elif request.method == 'POST':
-        events = Event.objects.all()
-        events_data = JSONParser().parse(request)
-        event_serializer = EventSerializer(events, many=True)
-        tutorial_serializer = EventSerializer(data=events_data)
+    def post(self,request):
+        if request.method == 'POST':
+         events = Event.objects.all()
+         events_data = JSONParser().parse(request)
+         event_serializer = EventSerializer(events, many=True)
+         tutorial_serializer = EventSerializer(data=events_data)
         if event_serializer.is_valid():
             event_serializer.save()
             return JsonResponse(event_serializer.data, status=status.HTTP_201_CREATED) 
@@ -63,49 +64,49 @@ class EventView(APIView):
    
  
  
-class EventView(APIView):
-  schema =EventViewSchema()
-  def event_detail(request, pk):
-    token = request.COOKIES.get('jwt')
-    
-    
-    try: 
-        event = Event.objects.get(pk=pk) 
-    except Event.DoesNotExist: 
-        return JsonResponse({'message': 'The event does not exist'}, status=status.HTTP_404_NOT_FOUND) 
- 
-    if request.method == 'GET': 
-
+class EventDetailView(APIView):
+    schema =EventViewSchema()
+    def get(self,request,pk):
+     token = request.COOKIES.get('jwt')
+     if not token:
+            raise AuthenticationFailed('Unauthenticated!')       
+     try: 
+        event = Event.objects.get(pk=pk)
         event_serializer = EventSerializer(event) 
         return JsonResponse(event_serializer.data) 
  
-    elif request.method == 'PUT': 
-
-        if not token:
+     except Event.DoesNotExist: 
+        return JsonResponse({'message': 'The event does not exist'}, status=status.HTTP_404_NOT_FOUND)
+   
+    def put(self,request,pk):
+     token = request.COOKIES.get('jwt')
+     if not token:
             raise AuthenticationFailed('Unauthenticated!')
-        try:
+     try:
+            event = Event.objects.get(pk=pk) 
             payload = jwt.decode(token, 'secret', algorithm=['HS256'])
-        except jwt.ExpiredSignatureError:
+     except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Unauthenticated!')
 
-        event_data = JSONParser().parse(request) 
-        event_serializer = EventSerializer(event, data=event_data) 
-        if event_serializer.is_valid(): 
+     event_data = JSONParser().parse(request) 
+     event_serializer = EventSerializer(event, data=event_data) 
+     if event_serializer.is_valid(): 
             event_serializer.save() 
             return JsonResponse(event_serializer.data) 
-        return JsonResponse(event_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
- 
-    elif request.method == 'DELETE': 
+     return JsonResponse(event_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        if not token:
+    def delete(self,request,pk):
+     token = request.COOKIES.get('jwt')
+     if not token:
             raise AuthenticationFailed('Unauthenticated!')
-        try:
+     try:
+            event = Event.objects.get(pk=pk) 
             payload = jwt.decode(token, 'secret', algorithm=['HS256'])
-        except jwt.ExpiredSignatureError:
+     except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Unauthenticated!')
 
-        event.delete() 
-        return JsonResponse({'message': 'Garden was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+     event.delete() 
+     return JsonResponse({'message': 'Event was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
 
 
     
