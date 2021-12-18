@@ -10,7 +10,7 @@ from rest_framework import authentication, permissions
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
- 
+import jwt 
 from events.models import Event
 from events.serializers import EventSerializer
 from rest_framework.decorators import api_view
@@ -41,9 +41,10 @@ class EventViewSchema(AutoSchema):
 
 
 #Nivedita Vee
-@api_view(['GET', 'POST', 'DELETE'])
-def event_list(request):
-    schema =EventViewSchema()
+class EventView(APIView):
+   schema =EventViewSchema()
+   def event_list(request):
+   
     if request.method == 'GET':
         events = Event.objects.all()
         event_serializer = EventSerializer(events, many=True)
@@ -59,26 +60,34 @@ def event_list(request):
             event_serializer.save()
             return JsonResponse(event_serializer.data, status=status.HTTP_201_CREATED) 
         return JsonResponse(event_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+   
+ 
+ 
+class EventView(APIView):
+  schema =EventViewSchema()
+  def event_detail(request, pk):
+    token = request.COOKIES.get('jwt')
     
-    elif request.method == 'DELETE':
-        count = Event.objects.all().delete()
-        return JsonResponse({'message': '{} Events were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
- 
- 
-@api_view(['GET', 'PUT', 'DELETE'])
-
-def event_detail(request, pk):
-    schema =EventViewSchema()
+    
     try: 
         event = Event.objects.get(pk=pk) 
     except Event.DoesNotExist: 
         return JsonResponse({'message': 'The event does not exist'}, status=status.HTTP_404_NOT_FOUND) 
  
     if request.method == 'GET': 
+
         event_serializer = EventSerializer(event) 
         return JsonResponse(event_serializer.data) 
  
     elif request.method == 'PUT': 
+
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+        try:
+            payload = jwt.decode(token, 'secret', algorithm=['HS256'])
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('Unauthenticated!')
+
         event_data = JSONParser().parse(request) 
         event_serializer = EventSerializer(event, data=event_data) 
         if event_serializer.is_valid(): 
@@ -87,6 +96,18 @@ def event_detail(request, pk):
         return JsonResponse(event_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
  
     elif request.method == 'DELETE': 
+
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+        try:
+            payload = jwt.decode(token, 'secret', algorithm=['HS256'])
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('Unauthenticated!')
+
         event.delete() 
-        return JsonResponse({'message': 'Event was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+        return JsonResponse({'message': 'Garden was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+
+
+    
+    
     

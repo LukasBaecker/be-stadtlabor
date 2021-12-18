@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'events',
     'django.contrib.gis',
     
+    
 ]
 
 MIDDLEWARE = [
@@ -75,6 +76,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+             'libraries': {
+                'staticfiles': 'django.templatetags.static',
+            },
         },
     },
 ]
@@ -133,6 +137,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
 
 #User Issues - Brian 
 AUTH_USER_MODEL = "users.User" 
