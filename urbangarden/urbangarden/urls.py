@@ -29,8 +29,8 @@ urlpatterns = [
     path('api/v1/gardens/',include('gardens.urls')),
     path('api/v1/crops/',include('crops.urls')),
     path('api/v1/events/',include('events.urls')),
-    path('',schema_view),
     path('accounts/', include('rest_framework.urls')),
+    path('',schema_view),
 ]
 
 if settings.DEBUG:
