@@ -67,16 +67,12 @@ class EventView(APIView):
 class EventDetailView(APIView):
     schema =EventViewSchema()
     def get(self,request,pk):
-     token = request.COOKIES.get('jwt')
-     if not token:
-            raise AuthenticationFailed('Unauthenticated!')       
-     try: 
+      
         event = Event.objects.get(pk=pk)
         event_serializer = EventSerializer(event) 
         return JsonResponse(event_serializer.data) 
  
-     except Event.DoesNotExist: 
-        return JsonResponse({'message': 'The event does not exist'}, status=status.HTTP_404_NOT_FOUND)
+    
    
     def put(self,request,pk):
      token = request.COOKIES.get('jwt')
@@ -107,6 +103,27 @@ class EventDetailView(APIView):
 
      event.delete() 
      return JsonResponse({'message': 'Event was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+    
+class EventDetailViewPost(APIView):
+     schema =EventViewSchema()
+
+     def post(self,request): 
+        token = request.COOKIES.get('jwt')
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+        try:
+            payload = jwt.decode(token, 'secret', algorithm=['HS256'])
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('Unauthenticated!')
+
+        event_data = JSONParser().parse(request) 
+        event_serializer = EventSerializer(data=event_data) 
+        if event_serializer.is_valid(): 
+            event_serializer.save() 
+            return JsonResponse(event_serializer.data) 
+        return JsonResponse(event_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+  
+
 
 
     
