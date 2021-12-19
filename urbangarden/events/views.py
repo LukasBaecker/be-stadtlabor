@@ -51,32 +51,18 @@ class EventView(APIView):
         event_serializer = EventSerializer(events, many=True)
         return JsonResponse(event_serializer.data, safe=False)
         # 'safe=False' for objects serialization
-    def post(self,request):
-        if request.method == 'POST':
-         events = Event.objects.all()
-         events_data = JSONParser().parse(request)
-         event_serializer = EventSerializer(events, many=True)
-         tutorial_serializer = EventSerializer(data=events_data)
-        if event_serializer.is_valid():
-            event_serializer.save()
-            return JsonResponse(event_serializer.data, status=status.HTTP_201_CREATED) 
-        return JsonResponse(event_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
    
  
  
 class EventDetailView(APIView):
     schema =EventViewSchema()
     def get(self,request,pk):
-     token = request.COOKIES.get('jwt')
-     if not token:
-            raise AuthenticationFailed('Unauthenticated!')       
-     try: 
+      
         event = Event.objects.get(pk=pk)
         event_serializer = EventSerializer(event) 
         return JsonResponse(event_serializer.data) 
  
-     except Event.DoesNotExist: 
-        return JsonResponse({'message': 'The event does not exist'}, status=status.HTTP_404_NOT_FOUND)
+    
    
     def put(self,request,pk):
      token = request.COOKIES.get('jwt')
@@ -107,6 +93,27 @@ class EventDetailView(APIView):
 
      event.delete() 
      return JsonResponse({'message': 'Event was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+    
+class EventDetailViewPost(APIView):
+     schema =EventViewSchema()
+
+     def post(self,request): 
+        token = request.COOKIES.get('jwt')
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+        try:
+            payload = jwt.decode(token, 'secret', algorithm=['HS256'])
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('Unauthenticated!')
+
+        event_data = JSONParser().parse(request) 
+        event_serializer = EventSerializer(data=event_data) 
+        if event_serializer.is_valid(): 
+            event_serializer.save() 
+            return JsonResponse(event_serializer.data) 
+        return JsonResponse(event_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+  
+
 
 
     
