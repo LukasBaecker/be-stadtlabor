@@ -36,10 +36,10 @@ class Resource(models.Model):
     resource_name = models.CharField(max_length=255)
     category = models.ForeignKey('Category', on_delete=models.PROTECT, null=False)
     date_created = models.DateTimeField(auto_now_add=True)
-    return_date = models.DateTimeField(null = True) 
+    return_date = models.DateTimeField(null = True, blank=True) 
     garden = models.ForeignKey('Garden',on_delete=models.PROTECT,null=False)
-    #lender = models.ForeignKey('users.User', on_delete=models.DO_NOTHING)
-    #borrower = models.ForeignKey('users.User', on_delete=models.DO_NOTHING, blank=True, null=True, related_name="%(user)s_related")
+    lender_id = models.ForeignKey('users.User', on_delete=models.DO_NOTHING, null=True, default=1)
+
 
     def __str__(self):
         return self.resource_name
@@ -59,6 +59,13 @@ class Category(models.Model):
     def __str__(self):
         return self.category_name
 
+ #Author: Brian Pondi
+class ResourceBorrowing(models.Model):
+    resource_id = models.OneToOneField('Resource',on_delete=models.DO_NOTHING)
+    borrower_id = models.ForeignKey('users.User', on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return self.resource_id + '_' + self.user_id
 
 
 
