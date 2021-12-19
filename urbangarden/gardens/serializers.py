@@ -1,6 +1,6 @@
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from rest_framework import serializers
-from .models import Garden,Resource
+from .models import Garden,Resource, ResourceBorrowing
 
 #Garden
 class GardenSerializer(GeoFeatureModelSerializer):
@@ -16,7 +16,10 @@ class ResourceSerializer(serializers.ModelSerializer):
         model = Resource
         fields = ['resource_id', 'resource_status', 'resource_name', 
                 'category', 'date_created', 'return_date', 'garden'
-                  #'lender ', #'borrower '
-        ]
+            ]
 
-         
+# ResourceBorrowing
+class ResourceBorrowingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ResourceBorrowing
+        fields = ('__all__')
