@@ -146,7 +146,7 @@ class ForgotPasswordView(APIView):
 
         send_mail(
             subject='Reset your password', 
-            message='Click <a href="http://giv-project15:9000/reset/' + token + '">here</a> to reset your password',
+            message='Click <a href="https://gardenup.netlify.app/reset/' + token + '">here</a> to reset your password',
             from_email='admin@urbangarden.com',
             recipient_list=[email]
         )
