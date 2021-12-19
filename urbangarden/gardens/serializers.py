@@ -6,8 +6,8 @@ from .models import Garden,Resource, ResourceBorrowing
 class GardenSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Garden
-        geo_field = ['geom_point', 'geom_polygon']
-        fields = ('__all__')
+        geo_field = 'geom_point'
+        fields = '__all__'
         
 
 # Resource
@@ -22,4 +22,4 @@ class ResourceSerializer(serializers.ModelSerializer):
 class ResourceBorrowingSerializer(serializers.ModelSerializer):
     class Meta:
         model = ResourceBorrowing
-        fields = ('__all__')
+        fields = '__all__'
