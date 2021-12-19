@@ -1,11 +1,14 @@
 from django.conf.urls import url
-from gardens import views
+from .views import GardenView, GardenDetailView, GardenDetailViewPost, ResourceView, ResourceDetailView, ResourceDetailViewPost 
+from django.urls import path, include
 
 urlpatterns = [
         #Gardens
-        url('gardens/all', views.garden_all),
-        url('gardens/ID/(?P<pk>[0-9]+)', views.garden_ID),
+        path('all', GardenView.as_view()),
+        path('<pk>', GardenDetailView.as_view()),
+        path('', GardenDetailViewPost.as_view()),
         #Resources
-        url('resources/all', views.resource_all),
-        url('resources/ID/(?P<pk>[0-9]+)', views.resource_ID)
+        path('resources/all', ResourceView.as_view()),
+        path('resources/<pk>', ResourceDetailView.as_view()),
+        path('resources/', ResourceDetailViewPost.as_view()),
 ]

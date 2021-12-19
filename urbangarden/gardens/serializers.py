@@ -18,7 +18,6 @@ class ResourceSerializer(serializers.ModelSerializer):
                 'category', 'date_created', 'return_date', 'garden'
             ]
 
-
 # ResourceBorrowing
 class ResourceBorrowingSerializer(serializers.ModelSerializer):
     class Meta:
