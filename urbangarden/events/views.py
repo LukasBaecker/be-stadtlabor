@@ -51,16 +51,6 @@ class EventView(APIView):
         event_serializer = EventSerializer(events, many=True)
         return JsonResponse(event_serializer.data, safe=False)
         # 'safe=False' for objects serialization
-    def post(self,request):
-        if request.method == 'POST':
-         events = Event.objects.all()
-         events_data = JSONParser().parse(request)
-         event_serializer = EventSerializer(events, many=True)
-         tutorial_serializer = EventSerializer(data=events_data)
-        if event_serializer.is_valid():
-            event_serializer.save()
-            return JsonResponse(event_serializer.data, status=status.HTTP_201_CREATED) 
-        return JsonResponse(event_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
    
  
  
