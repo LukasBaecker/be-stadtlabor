@@ -3,7 +3,7 @@ from rest_framework import serializers
 from .models import Garden,Resource
 
 #Garden
-class GardenSerializer(GeoFeatureModelSerializer):
+class GardenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Garden
         geo_field = ['geom_point', 'geom_polygon']
