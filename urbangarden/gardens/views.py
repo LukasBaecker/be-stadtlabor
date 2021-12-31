@@ -1,19 +1,21 @@
 from django.shortcuts import render
 
-from django.http.response import HttpResponse, JsonResponse
+from django.http.response import JsonResponse
+from django.contrib.gis.db.models.functions import Distance
+from django.contrib.gis.geos import Point
 from rest_framework.parsers import JSONParser
-from rest_framework import status
+from rest_framework import status, viewsets
 
 from .models import Garden, Resource
 from .serializers import GardenSerializer, ResourceSerializer
 
-from rest_framework.decorators import api_view
-import coreapi
 from rest_framework.schemas import AutoSchema
-import jwt 
 from rest_framework.views import APIView
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.decorators import action
 
+import coreapi
+import jwt 
 #CoreAPI schema -> Brian Pondi 
 
 class GardenViewSchema(AutoSchema):
@@ -46,6 +48,7 @@ class ResourceViewSchema(AutoSchema):
             extra_fields = [
                 coreapi.Field('resource_status'),
                 coreapi.Field('resource_name'),
+                coreapi.Field('description'),
                 coreapi.Field('category'),
                 coreapi.Field('date_created'),
                 coreapi.Field('return_date'),
@@ -61,15 +64,24 @@ class ResourceViewSchema(AutoSchema):
 
 # GARDENS
 # 1 of 2: request for all ['GET']
-class GardenView(APIView):
+class GardenView(viewsets.ReadOnlyModelViewSet):
     schema =GardenViewSchema()
-    def get(self,request):
+    serializer_class = GardenSerializer
+    queryset = Garden.objects.all()
+ 
+    @action(detail=False, methods=['get'])
+    def get_nearest_gardens(self, request):
+        x_coords = request.GET.get('x', None)
+        y_coords = request.GET.get('y', None)
+        if x_coords and y_coords:
+            user_location = Point(float(x_coords), float(y_coords),srid=4326)
+            nearest_gardens = Garden.objects.annotate(distance=Distance('geom',user_location)).order_by('distance')[:3]
+            serializer = self.get_serializer_class()
+            serialized = serializer(nearest_gardens, many = True)
+            print(nearest_gardens)
+            return JsonResponse(serialized.data, status=status.HTTP_200_OK)
+        return JsonResponse(status=status.HTTP_400_BAD_REQUEST)
 
-        if request.method == 'GET':
-            gardens = Garden.objects.all()
-            garden_serializer = GardenSerializer(gardens, many=True)
-            return JsonResponse(garden_serializer.data, safe=False)
-            # 'safe=False' for objects serialization
 # 2 of 2: request by garden ID ['GET', 'PUT', 'DELETE']
 
 class GardenDetailView(APIView):
