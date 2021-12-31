@@ -1,4 +1,7 @@
 from django.core.mail import send_mail
+from django.http.response import JsonResponse
+from rest_framework import status
+from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed, APIException, NotFound
@@ -21,8 +24,8 @@ class RegisterViewSchema(AutoSchema):
                 coreapi.Field('first_name'),
                 coreapi.Field('last_name'),
                 coreapi.Field('email'),
-                coreapi.Field('password'),
                 coreapi.Field('phone'),
+                coreapi.Field('garden'),
             ]
         manual_fields = super().get_manual_fields(path, method)
         return manual_fields + extra_fields
@@ -61,6 +64,22 @@ class ResetPasswordViewSchema(AutoSchema):
                 coreapi.Field('token'),
                 coreapi.Field('password'),
                 coreapi.Field('password_confirm'),
+            ]
+        manual_fields = super().get_manual_fields(path, method)
+        return manual_fields + extra_fields
+
+class UserViewSchema(AutoSchema):
+
+    def get_manual_fields(self, path, method):
+        extra_fields = []
+        if method.lower() in ['put']:
+            extra_fields = [
+                coreapi.Field('first_name'),
+                coreapi.Field('last_name'),
+                coreapi.Field('email'),
+                coreapi.Field('password'),
+                coreapi.Field('phone'),
+                coreapi.Field('garden'),
             ]
         manual_fields = super().get_manual_fields(path, method)
         return manual_fields + extra_fields
@@ -109,7 +128,7 @@ class LoginView(APIView):
 
 
 class UserView(APIView):
-
+    schema = UserViewSchema()
     def get(self, request):
         
         token = request.COOKIES.get('jwt')
@@ -125,6 +144,25 @@ class UserView(APIView):
         user = User.objects.filter(id=payload['id']).first()
         serializer = UserSerializer(user)
         return Response(serializer.data)
+    
+    
+    def put(self, request):
+        token = request.COOKIES.get('jwt')
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+        try:
+            #user = User.objects.get(pk=pk)
+            payload = jwt.decode(token, 'secret', algorithm=['HS256'])
+            user = User.objects.filter(id=payload['id']).first()
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('Unauthenticated!')
+
+        user_data = JSONParser().parse(request) 
+        user_serializer = UserSerializer(user, data=user_data) 
+        if user_serializer.is_valid(): 
+            user_serializer.save() 
+            return JsonResponse(user_serializer.data) 
+        return JsonResponse(user_serializer.errors, status= status.HTTP_400_BAD_REQUEST) 
 
 
 class LogoutView(APIView):
@@ -147,7 +185,7 @@ class ForgotPasswordView(APIView):
         send_mail(
             subject='Reset your password', 
             message='Click <a href="https://gardenup.netlify.app/reset/' + token + '">here</a> to reset your password',
-            from_email='admin@urbangarden.com',
+            from_email='brian.letscode@gmail.com',
             recipient_list=[email]
         )
 
