@@ -5,7 +5,7 @@ from .models import Garden,Resource, ResourceBorrowing
 #Garden
 class GardenSerializer(GeoFeatureModelSerializer):
 
-    #distance = serializers.CharField()
+    distance = serializers.CharField(default='0')
 
     class Meta:
         model = Garden

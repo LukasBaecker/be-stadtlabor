@@ -75,7 +75,7 @@ class GardenView(viewsets.ReadOnlyModelViewSet):
         y_coords = request.GET.get('y', None)
         if x_coords and y_coords:
             user_location = Point(float(x_coords), float(y_coords),srid=4326)
-            nearest_gardens = Garden.objects.annotate(distance=Distance('geom',user_location)).order_by('distance')[:3]
+            nearest_gardens = Garden.objects.annotate(distance=Distance('geom_point',user_location)).order_by('distance')[:3]
             serializer = self.get_serializer_class()
             serialized = serializer(nearest_gardens, many = True)
             print(nearest_gardens)
