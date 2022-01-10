@@ -4,10 +4,15 @@ from .models import Garden,Resource, ResourceBorrowing
 
 #Garden
 class GardenSerializer(GeoFeatureModelSerializer):
+
+    distance = serializers.CharField(default='0')
+
     class Meta:
         model = Garden
-        geo_field = ['geom_point', 'geom_polygon']
-        fields = ('__all__')
+        geo_field = 'geom_point'
+        fields = '__all__'
+        #read_only_fields = ['distance']
+
         
 
 # Resource
@@ -22,4 +27,4 @@ class ResourceSerializer(serializers.ModelSerializer):
 class ResourceBorrowingSerializer(serializers.ModelSerializer):
     class Meta:
         model = ResourceBorrowing
-        fields = ('__all__')
+        fields = '__all__'
