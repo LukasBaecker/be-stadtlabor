@@ -1,18 +1,25 @@
+from django.http import response
 from django.shortcuts import render
-
-from django.http.response import HttpResponse, JsonResponse
+from django.template import RequestContext
+from django.http.response import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework import status
-
+import requests
 from .models import Garden, Resource
 from .serializers import GardenSerializer, ResourceSerializer
-
+from django.urls import reverse
 from rest_framework.decorators import api_view
 import coreapi
 from rest_framework.schemas import AutoSchema
 import jwt 
 from rest_framework.views import APIView
 from rest_framework.exceptions import AuthenticationFailed
+from django.shortcuts import render
+from django.http import  HttpResponse
+import urllib,json
+from geopy.geocoders import Nominatim
+from rest_framework.generics import ListAPIView
+from rest_framework_gis.filterset import GeoFilterSet        
 
 #CoreAPI schema -> Brian Pondi 
 
@@ -200,3 +207,21 @@ class ResourceDetailViewPost(APIView):
             resource_serializer.save() 
             return JsonResponse(resource_serializer.data) 
         return JsonResponse(resource_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+
+class GetCoordinatesFromAddress(ListAPIView, GeoFilterSet):
+    """ Shows Gardens"""
+
+    def get(self, *args, **kwargs):
+        # We can check on the server side the location of the users, using request
+        # point = self.request.user.coordinates
+        # ?address=QUERY_ADDRESS
+        # QUERY_ADDRESS is the information user passes to the query
+        QUERY_ADDRESS = self.request.query_params.get('address', None)
+
+        if QUERY_ADDRESS not in [None, '']:
+            # here we can use the geopy library:
+            geolocator = Nominatim(user_agent="mysuperapp")
+            location = geolocator.geocode(QUERY_ADDRESS)
+            return JsonResponse({'coordinates': [location.latitude ,location.longitude]}, status=status.HTTP_200_OK)
+        else:
+            return JsonResponse({'message': 'No address was passed in the query'}, status=status.HTTP_400_BAD_REQUEST)
