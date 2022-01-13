@@ -24,31 +24,26 @@ class RegisterViewSchema(AutoSchema):
                 coreapi.Field(
                     name = 'first_name',
                     required = True,
-                    location= 'path',
                     description= 'Lotta',
                     type='string'),
                 coreapi.Field(
                     name = 'last_name',
                     required = True,
-                    location= 'path',
                     description= 'Meyer',
                     type='string'),
                 coreapi.Field(
                     name = 'email',
                     required = True,
-                    location= 'path',
                     description= 'Personal email: Lotta-Meyer@email.com',
                     type='string'),
                 coreapi.Field(
                     name = 'phone',
                     required = True,
-                    location= 'path',
                     description= 'Phone number with country code: +49 1 575123456',
                     type='string'),
                 coreapi.Field(
                     name = 'garden',
                     required = True,
-                    location= 'path',
                     description= 'Garden id: 1 or 2 or 3 ...',
                     type='integer'), 
             ]
@@ -66,13 +61,11 @@ class LoginViewSchema(AutoSchema):
                 coreapi.Field(
                     name = 'email',
                     required = True,
-                    location= 'path',
                     description= 'Registered email',
                     type='string'),
                 coreapi.Field(
                     name = 'password',
                     required = True,
-                    location= 'path',
                     description= 'Personal password',
                     type='string'),
             ]
@@ -88,7 +81,6 @@ class ForgotPasswordViewSchema(AutoSchema):
                 coreapi.Field(
                     name = 'email',
                     required = True,
-                    location= 'path',
                     description= 'Personal email: Lotta-Meyer@email.com',
                     type='string'),
             ]
@@ -104,19 +96,16 @@ class ResetPasswordViewSchema(AutoSchema):
                 coreapi.Field(
                     name = 'token',
                     required = True,
-                    location= 'path',
                     description= 'Token-based authentication code',
                     type='string'),
                 coreapi.Field(
                     name = 'password',
                     required = True,
-                    location= 'path',
                     description= 'Personal password: At least 10 character, include numbers and special characters',
                     type='string'),
                 coreapi.Field(
                     name = 'password_confirm',
                     required = True,
-                    location= 'path',
                     description= 'Repeat your password',
                     type='string'),
             ]
@@ -132,37 +121,31 @@ class UserViewSchema(AutoSchema):
                 coreapi.Field(
                     name = 'first_name',
                     required = True,
-                    location= 'path',
                     description= 'Lotta',
                     type='string'),
                 coreapi.Field(
                     name = 'last_name',
                     required = True,
-                    location= 'path',
                     description= 'Meyer',
                     type='string'),
                 coreapi.Field(
                     name = 'email',
                     required = True,
-                    location= 'path',
                     description= 'Registered email',
                     type='string'),
                 coreapi.Field(
                     name = 'password',
                     required = True,
-                    location= 'path',
                     description= 'Personal password',
                     type='string'),
                 coreapi.Field(
                     name = 'phone',
                     required = True,
-                    location= 'path',
                     description= 'Phone number with country code: +49 1 575123456',
                     type='string'),
                 coreapi.Field(
                     name = 'garden',
                     required = True,
-                    location= 'path',
                     description= 'Garden id: 1 or 2 or 3 ...',
                     type='integer'), 
             ]
