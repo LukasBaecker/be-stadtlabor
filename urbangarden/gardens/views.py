@@ -27,55 +27,46 @@ class GardenViewSchema(AutoSchema):
                 coreapi.Field(
                     name = 'longitude',
                     required = True,
-                    location= 'path',
-                    description= 'Decimal degrees: 7.626143',
-                    type='float'),
+                    description= 'Decimal degrees (float): 7.626143',
+                    type='number'),
                 coreapi.Field(
                     name = 'latitude',
                     required = True,
-                    location= 'path',
-                    description= 'Decimal degrees: 51.960745',
-                    type='float'),
+                    description= 'Decimal degrees (float): 51.960745',
+                    type='number'),
                 coreapi.Field(
                     name = 'name',
                     required = True,
-                    location= 'path',
                     description= 'Garden name: Der Paradeiser',
                     type='string'),
                 coreapi.Field(
                     name = 'description',
                     required = True,
-                    location= 'path',
                     description= 'Chracteristics, details, aim (etc): The garden consists of 16 raised beds ...',
                     type='string'),
                 coreapi.Field(
                     name = 'email',
                     required = True,
-                    location= 'path',
                     description= 'Official email: Garden@email.com',
                     type='string'),
                 coreapi.Field(
                     name = 'phone',
                     required = True,
-                    location= 'path',
                     description= 'Phone number with country code: +49 1 575123456',
                     type='string'),
                 coreapi.Field(
                     name = 'crops',
                     required = True,
-                    location= 'path',
                     description= 'Array of crops id [1,4,6]: 1 = Beetroot, 2 = Marsh bedstraw ...',
-                    type='array'),
+                    type='string'),
                 coreapi.Field(
                     name = 'address',
                     required = True,
-                    location= 'path',
                     description= 'Name and number: Gardenstrasse 1',
                     type='string'),
                 coreapi.Field(
                     name = 'geom_point',
                     required = True,
-                    location= 'path',
                     description= '''Location of garden (supports WKT or geojson geometries):
                     {
                         "type": "Point",
@@ -83,11 +74,10 @@ class GardenViewSchema(AutoSchema):
                             [ -0.034294116776437,
                             0.018081666485151  ]
                     }''',
-                    type='point (double array)'),
+                    type='string'),
                 coreapi.Field(
                     name = 'geom_polygon',
                     required = True,
-                    location= 'path',
                     description= '''Limit of garden (supports WKT or geojson geometries):
                     {
                         "type": "Polygon",
@@ -97,19 +87,17 @@ class GardenViewSchema(AutoSchema):
                           [  0.029487619176507, 0.054588288657813 ],
                           [ -0.002861015964299, 0.035667405488396 ] ] ] 
                     }''',
-                    type='polygon (linear array)'),
+                    type='string'),
                 coreapi.Field(
                     name = 'primary_purpose',
                     required = True,
-                    location= 'path',
                     description= '"Garden" or "Resources"',
                     type='string'),           
                 coreapi.Field(
                     name = 'members',
                     required = True,
-                    location= 'path',
-                    description= '1 = Member or 2 = Admin',
-                    type='integer'),                
+                    description= 'User members',
+                    type='string'),                
             ]
         manual_fields = super().get_manual_fields(path, method)
         return manual_fields + extra_fields
@@ -123,25 +111,21 @@ class ResourceViewSchema(AutoSchema):
                 coreapi.Field(
                     name = 'resource_status',
                     required = True,
-                    location= 'path',
                     description= '"Available for borrowing" or "Borrowed" or "Available for donation"',
                     type='string'),
                 coreapi.Field(
                     name = 'resource_name',
                     required = True,
-                    location= 'path',
                     description= 'Resource name: Hammer',
                     type='string'),
                 coreapi.Field(
                     name = 'description',
                     required = True,
-                    location= 'path',
                     description= 'Chracteristics, details, aim (etc): The tool is made of ...',
                     type='string'),
                 coreapi.Field(
                     name = 'category',
                     required = True,
-                    location= 'path',
                     description= 
                     ''' Category:
                     1 = Tools, 2 = Seeds, 3 = Fertilizers,
@@ -151,21 +135,23 @@ class ResourceViewSchema(AutoSchema):
                 coreapi.Field(
                     name = 'date_created',
                     required = True,
-                    location= 'path',
                     description= '2021-12-16 T12:00:00Z',
-                    type='date'),
+                    type='string'),
                 coreapi.Field(
                     name = 'return_date',
                     required = True,
-                    location= 'path',
                     description= '2021-12-16 T12:00:00Z',
-                    type='date'),
+                    type='string'),
                 coreapi.Field(
                     name = 'garden',
                     required = True,
-                    location= 'path',
                     description= 'Garden id: 1 or 2 or 3 ...',
                     type='integer'),                  
+                coreapi.Field(
+                    name = 'lender_id',
+                    required = True,
+                    description= 'User id: 1 or 2 or 3 ...',
+                    type='integer'), 
             ]
         manual_fields = super().get_manual_fields(path, method)
         return manual_fields + extra_fields
