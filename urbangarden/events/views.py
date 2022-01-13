@@ -30,41 +30,33 @@ class EventViewSchema(AutoSchema):
                 coreapi.Field(
                     name = 'title',
                     required = True,
-                    location= 'path',
                     description= 'Event title: Creating a bountiful garden',
                     type='string'), 
                 coreapi.Field(
                     name = 'description',
                     required = True,
-                    location= 'path',
                     description= 'Chracteristics, details, aim (etc): In the event we will discover ...',
                     type='string'),
                 coreapi.Field(
                     name = 'venue',
                     required = True,
-                    location= 'path',
                     description= 'Place where the event takes place: Aasee park',
                     type='string'),
                 coreapi.Field(
                     name = 'date',
                     required = True,
-                    location= 'path',
                     description= '2021-12-16 T12:00:00Z',
-                    type='date'),
+                    type='string'),
                 coreapi.Field(
                     name = 'duration',
                     required = True,
-                    location= 'path',
                     description= '02:00:00',
-                    type='time'),
+                    type='string'),
                 coreapi.Field(
                     name = 'garden',
                     required = True,
-                    location= 'path',
                     description= 'Garden id: 1 or 2 or 3 ...',
-                    type='integer'),
-
-                
+                    type='integer'),   
             ]
         manual_fields = super().get_manual_fields(path, method)
         return manual_fields + extra_fields
