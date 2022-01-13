@@ -21,11 +21,31 @@ class RegisterViewSchema(AutoSchema):
         extra_fields = []
         if method.lower() in ['post']:
             extra_fields = [
-                coreapi.Field('first_name'),
-                coreapi.Field('last_name'),
-                coreapi.Field('email'),
-                coreapi.Field('phone'),
-                coreapi.Field('garden'),
+                coreapi.Field(
+                    name = 'first_name',
+                    required = True,
+                    description= 'Lotta',
+                    type='string'),
+                coreapi.Field(
+                    name = 'last_name',
+                    required = True,
+                    description= 'Meyer',
+                    type='string'),
+                coreapi.Field(
+                    name = 'email',
+                    required = True,
+                    description= 'Personal email: Lotta-Meyer@email.com',
+                    type='string'),
+                coreapi.Field(
+                    name = 'phone',
+                    required = True,
+                    description= 'Phone number with country code: +49 1 575123456',
+                    type='string'),
+                coreapi.Field(
+                    name = 'garden',
+                    required = True,
+                    description= 'Garden id: 1 or 2 or 3 ...',
+                    type='integer'), 
             ]
         manual_fields = super().get_manual_fields(path, method)
         return manual_fields + extra_fields
@@ -38,8 +58,16 @@ class LoginViewSchema(AutoSchema):
         extra_fields = []
         if method.lower() in ['post']:
             extra_fields = [
-                coreapi.Field('email'),
-                coreapi.Field('password'),
+                coreapi.Field(
+                    name = 'email',
+                    required = True,
+                    description= 'Registered email',
+                    type='string'),
+                coreapi.Field(
+                    name = 'password',
+                    required = True,
+                    description= 'Personal password',
+                    type='string'),
             ]
         manual_fields = super().get_manual_fields(path, method)
         return manual_fields + extra_fields
@@ -50,7 +78,11 @@ class ForgotPasswordViewSchema(AutoSchema):
         extra_fields = []
         if method.lower() in ['post']:
             extra_fields = [
-                coreapi.Field('email'),
+                coreapi.Field(
+                    name = 'email',
+                    required = True,
+                    description= 'Personal email: Lotta-Meyer@email.com',
+                    type='string'),
             ]
         manual_fields = super().get_manual_fields(path, method)
         return manual_fields + extra_fields
@@ -61,9 +93,21 @@ class ResetPasswordViewSchema(AutoSchema):
         extra_fields = []
         if method.lower() in ['post']:
             extra_fields = [
-                coreapi.Field('token'),
-                coreapi.Field('password'),
-                coreapi.Field('password_confirm'),
+                coreapi.Field(
+                    name = 'token',
+                    required = True,
+                    description= 'Token-based authentication code',
+                    type='string'),
+                coreapi.Field(
+                    name = 'password',
+                    required = True,
+                    description= 'Personal password: At least 10 character, include numbers and special characters',
+                    type='string'),
+                coreapi.Field(
+                    name = 'password_confirm',
+                    required = True,
+                    description= 'Repeat your password',
+                    type='string'),
             ]
         manual_fields = super().get_manual_fields(path, method)
         return manual_fields + extra_fields
@@ -74,12 +118,36 @@ class UserViewSchema(AutoSchema):
         extra_fields = []
         if method.lower() in ['put']:
             extra_fields = [
-                coreapi.Field('first_name'),
-                coreapi.Field('last_name'),
-                coreapi.Field('email'),
-                coreapi.Field('password'),
-                coreapi.Field('phone'),
-                coreapi.Field('garden'),
+                coreapi.Field(
+                    name = 'first_name',
+                    required = True,
+                    description= 'Lotta',
+                    type='string'),
+                coreapi.Field(
+                    name = 'last_name',
+                    required = True,
+                    description= 'Meyer',
+                    type='string'),
+                coreapi.Field(
+                    name = 'email',
+                    required = True,
+                    description= 'Registered email',
+                    type='string'),
+                coreapi.Field(
+                    name = 'password',
+                    required = True,
+                    description= 'Personal password',
+                    type='string'),
+                coreapi.Field(
+                    name = 'phone',
+                    required = True,
+                    description= 'Phone number with country code: +49 1 575123456',
+                    type='string'),
+                coreapi.Field(
+                    name = 'garden',
+                    required = True,
+                    description= 'Garden id: 1 or 2 or 3 ...',
+                    type='integer'), 
             ]
         manual_fields = super().get_manual_fields(path, method)
         return manual_fields + extra_fields
