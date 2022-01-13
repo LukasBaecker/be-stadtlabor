@@ -306,7 +306,7 @@ class ResourceDetailViewPost(APIView):
             raise AuthenticationFailed('Unauthenticated!')
 
         resource_data = JSONParser().parse(request) 
-        resource_serializer = GardenSerializer(data=resource_data) 
+        resource_serializer = ResourceSerializer(data=resource_data) 
         if resource_serializer.is_valid(): 
             resource_serializer.save() 
             return JsonResponse(resource_serializer.data) 
