@@ -28,9 +28,7 @@ class NearestGardenSerializer(GeoFeatureModelSerializer):
 class ResourceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resource
-        fields = ['resource_id', 'resource_status', 'resource_name', 
-                'category', 'date_created', 'return_date', 'garden'
-            ]
+        fields = '__all__'
 
 # ResourceBorrowing
 class ResourceBorrowingSerializer(serializers.ModelSerializer):
