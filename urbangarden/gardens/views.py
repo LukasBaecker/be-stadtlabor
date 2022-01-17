@@ -1,6 +1,7 @@
+from math import nan
 from django.http import response
 from django.shortcuts import render
-.
+
 from django.template import RequestContext
 from django.http.response import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
 from rest_framework.parsers import JSONParser
@@ -154,8 +155,12 @@ class GardenDetailViewPost(APIView):
             payload = jwt.decode(token, 'secret', algorithm=['HS256'])
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Unauthenticated!')
-
         garden_data = JSONParser().parse(request) 
+        location=[]
+        if garden_data["latitude"]==nan and garden_data["longitude"]==nan:
+            garden_data["latitude"]=location[0]
+            garden_data["longitude"]=location[1]
+        print(location)    
         garden_serializer = GardenSerializer(data=garden_data) 
         if garden_serializer.is_valid(): 
             garden_serializer.save() 
@@ -234,20 +239,3 @@ class ResourceDetailViewPost(APIView):
             return JsonResponse(resource_serializer.data) 
         return JsonResponse(resource_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
-class GetCoordinatesFromAddress(ListAPIView, GeoFilterSet):
-    """ Shows Gardens"""
-
-    def get(self, *args, **kwargs):
-        # We can check on the server side the location of the users, using request
-        # point = self.request.user.coordinates
-        # ?address=QUERY_ADDRESS
-        # QUERY_ADDRESS is the information user passes to the query
-        QUERY_ADDRESS = self.request.query_params.get('address', None)
-
-        if QUERY_ADDRESS not in [None, '']:
-            # here we can use the geopy library:
-            geolocator = Nominatim(user_agent="mysuperapp")
-            location = geolocator.geocode(QUERY_ADDRESS)
-            return JsonResponse({'coordinates': [location.latitude ,location.longitude]}, status=status.HTTP_200_OK)
-        else:
-            return JsonResponse({'message': 'No address was passed in the query'}, status=status.HTTP_400_BAD_REQUEST)
