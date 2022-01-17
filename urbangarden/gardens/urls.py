@@ -1,16 +1,6 @@
 from django.conf.urls import url
-from .views import GardenView, GardenDetailView, GardenDetailViewPost, ResourceView, ResourceDetailView, ResourceDetailViewPost
+from .views import GardenView, GardenDetailView, GardenDetailViewPost, ResourceView, ResourceDetailView, ResourceDetailViewPost 
 from django.urls import path, include
-
-from django.urls import path
-
-urlpatterns = [
-       
-        path('all', GardenView.as_view()),
-        path('<pk>', GardenDetailView.as_view()),
-        path('', GardenDetailViewPost.as_view()),
-]     
-
 from rest_framework import routers
 
 
@@ -24,7 +14,6 @@ urlpatterns = [
         path('<pk>', GardenDetailView.as_view()),
         path('', GardenDetailViewPost.as_view()),
         path('all/', include(router.urls)),
-
         #Resources
         path('resources/all', ResourceView.as_view()),
         path('resources/<pk>', ResourceDetailView.as_view()),
