@@ -27,14 +27,36 @@ class EventViewSchema(AutoSchema):
         extra_fields = []
         if method.lower() in ['post', 'put']:
             extra_fields = [
-                coreapi.Field('title'),
-                coreapi.Field('description'),
-                coreapi.Field('name'),
-                coreapi.Field('description'),
-                coreapi.Field('venue'),
-                coreapi.Field('date'),
-                coreapi.Field('duration'),
-                coreapi.Field('garden'),
+                coreapi.Field(
+                    name = 'title',
+                    required = True,
+                    description= 'Event title: Creating a bountiful garden',
+                    type='string'), 
+                coreapi.Field(
+                    name = 'description',
+                    required = True,
+                    description= 'Chracteristics, details, aim (etc): In the event we will discover ...',
+                    type='string'),
+                coreapi.Field(
+                    name = 'venue',
+                    required = True,
+                    description= 'Place where the event takes place: Aasee park',
+                    type='string'),
+                coreapi.Field(
+                    name = 'date',
+                    required = True,
+                    description= '2021-12-16 T12:00:00Z',
+                    type='string'),
+                coreapi.Field(
+                    name = 'duration',
+                    required = True,
+                    description= '02:00:00',
+                    type='string'),
+                coreapi.Field(
+                    name = 'garden',
+                    required = True,
+                    description= 'Garden id: 1 or 2 or 3 ...',
+                    type='integer'),   
             ]
         manual_fields = super().get_manual_fields(path, method)
         return manual_fields + extra_fields
