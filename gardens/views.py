@@ -7,6 +7,8 @@ from django.http.response import Http404, HttpResponse, HttpResponseRedirect, Js
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 import requests
+
+from .models import Crop
 from .models import Garden, Resource
 from .serializers import GardenSerializer, ResourceSerializer
 from django.urls import reverse
@@ -105,6 +107,8 @@ class GardenView(viewsets.ReadOnlyModelViewSet):
             print(nearest_gardens)
             return JsonResponse(serialized.data, status=status.HTTP_200_OK)
         return JsonResponse(status=status.HTTP_400_BAD_REQUEST)
+
+   
 
 # 2 of 2: request by garden ID ['GET', 'PUT', 'DELETE']
 

@@ -9,6 +9,7 @@ from crops import views
 urlpatterns = [ 
     url('', views.getcrops),
     
+    
 ]
   
 if settings.DEBUG:

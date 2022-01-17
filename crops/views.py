@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from rest_framework.decorators import api_view
+from gardens.models import Garden
 
 # Create your views here.
 @api_view(['GET'])
@@ -20,3 +21,8 @@ def getcrops(request):
            crops = Crop.objects.all()
            crop_serializer = CropSerializer(crops, many=True)
            return JsonResponse(crop_serializer.data, safe=False)
+
+  
+      
+              
+
