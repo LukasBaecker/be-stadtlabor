@@ -257,12 +257,11 @@ class GardenDetailViewPost(APIView):
             raise AuthenticationFailed('Unauthenticated!')
         garden_data = JSONParser().parse(request) 
         location=[]
-        if garden_data["latitude"]==nan and garden_data["longitude"]==nan:
+        if len(str(garden_data["latitude"])) < 2 and len(str(garden_data["longitude"])) < 2:
             garden_data["latitude"]=geocoding.geocoder[0]
             garden_data["longitude"]=geocoding.geocoder[1]
         garden_data["latitude"]=location[0]
-        garden_data["longitude"]=location[1]
-        print(location)    
+        garden_data["longitude"]=location[1]   
         garden_serializer = GardenSerializer(data=garden_data) 
         if garden_serializer.is_valid(): 
             garden_serializer.save() 
