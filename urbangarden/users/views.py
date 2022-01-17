@@ -5,7 +5,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed, APIException, NotFound
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserUpdateSerializer
 from .models import User, PasswordReset
 import jwt, datetime, random, string
 import coreapi
@@ -44,8 +44,8 @@ class RegisterViewSchema(AutoSchema):
                 coreapi.Field(
                     name = 'garden',
                     required = True,
-                    description= 'Garden id: 1 or 2 or 3 ...',
-                    type='integer'), 
+                    description= '[Garden id: 1 , 2 , 3 ...]',
+                    type='List[integer]'), 
             ]
         manual_fields = super().get_manual_fields(path, method)
         return manual_fields + extra_fields
@@ -129,25 +129,15 @@ class UserViewSchema(AutoSchema):
                     description= 'Meyer',
                     type='string'),
                 coreapi.Field(
-                    name = 'email',
-                    required = True,
-                    description= 'Registered email',
-                    type='string'),
-                coreapi.Field(
-                    name = 'password',
-                    required = True,
-                    description= 'Personal password',
-                    type='string'),
-                coreapi.Field(
                     name = 'phone',
                     required = True,
-                    description= 'Phone number with country code: +49 1 575123456',
+                    description= 'Phone number with country code: +49 1 575123456 ',
                     type='string'),
                 coreapi.Field(
                     name = 'garden',
                     required = True,
-                    description= 'Garden id: 1 or 2 or 3 ...',
-                    type='integer'), 
+                    description= '[Garden id: 1 , 2 , 3 ...]',
+                    type='List[Integer]'), 
             ]
         manual_fields = super().get_manual_fields(path, method)
         return manual_fields + extra_fields
@@ -226,7 +216,7 @@ class UserView(APIView):
             raise AuthenticationFailed('Unauthenticated!')
 
         user_data = JSONParser().parse(request) 
-        user_serializer = UserSerializer(user, data=user_data) 
+        user_serializer = UserUpdateSerializer(user, data=user_data) 
         if user_serializer.is_valid(): 
             user_serializer.save() 
             return JsonResponse(user_serializer.data) 

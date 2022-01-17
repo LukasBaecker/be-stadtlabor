@@ -7,7 +7,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework import status, viewsets
 
 from .models import Garden, Resource
-from .serializers import GardenSerializer, ResourceSerializer
+from .serializers import GardenSerializer, ResourceSerializer, NearestGardenSerializer
 
 from rest_framework.schemas import AutoSchema
 from rest_framework.views import APIView
@@ -165,16 +165,17 @@ class ResourceViewSchema(AutoSchema):
 # 1 of 2: request for all ['GET']
 class GardenView(viewsets.ReadOnlyModelViewSet):
     schema =GardenViewSchema()
-    serializer_class = GardenSerializer
+    serializer_class = NearestGardenSerializer
     queryset = Garden.objects.all()
- 
+
+    #Brian
     @action(detail=False, methods=['get'])
     def get_nearest_gardens(self, request):
         x_coords = request.GET.get('x', None)
         y_coords = request.GET.get('y', None)
         if x_coords and y_coords:
             user_location = Point(float(x_coords), float(y_coords),srid=4326)
-            nearest_gardens = Garden.objects.annotate(distance=Distance('geom_point',user_location)).order_by('distance')[:3]
+            nearest_gardens = Garden.objects.annotate(distance=Distance('geom_point',user_location)).order_by('distance')#[:3]
             serializer = self.get_serializer_class()
             serialized = serializer(nearest_gardens, many = True)
             print(nearest_gardens)
