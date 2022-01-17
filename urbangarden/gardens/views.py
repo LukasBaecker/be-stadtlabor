@@ -27,7 +27,7 @@ from .serializers import GardenSerializer, ResourceSerializer
 from rest_framework.schemas import AutoSchema
 from rest_framework.views import APIView
 from rest_framework.exceptions import AuthenticationFailed
-
+import geocoding
 from django.shortcuts import render
 from django.http import  HttpResponse
 import urllib,json
@@ -158,8 +158,10 @@ class GardenDetailViewPost(APIView):
         garden_data = JSONParser().parse(request) 
         location=[]
         if garden_data["latitude"]==nan and garden_data["longitude"]==nan:
-            garden_data["latitude"]=location[0]
-            garden_data["longitude"]=location[1]
+            garden_data["latitude"]=geocoding.geocoder[0]
+            garden_data["longitude"]=geocoding.geocoder[1]
+        garden_data["latitude"]=location[0]
+        garden_data["longitude"]=location[1]
         print(location)    
         garden_serializer = GardenSerializer(data=garden_data) 
         if garden_serializer.is_valid(): 
