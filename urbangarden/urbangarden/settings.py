@@ -154,9 +154,9 @@ REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS' : 'rest_framework.schemas.coreapi.AutoS
 #GEOS_LIBRARY_PATH= 'C:/Users/jmmartin/.5 Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/geos_c.dll'
 
 #Javier -> added to solve the geometry problem: "GDALException at /admin/gardens/garden/5/change/ OGR failure"    
-#os.environ['GDAL_DATA'] = "C:/Users/jmmartin/.5 Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/data/gdal"
-#os.environ['PROJ_LIB'] = "C:/Users/jmmartin/.5 Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/data/proj"
-#os.environ['PATH'] = "C:/Users/jmmartin/.5 Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/" + ";" + os.environ['PATH']
+os.environ['GDAL_DATA'] = "C:/Users/jmmartin/.5 Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/data/gdal"
+os.environ['PROJ_LIB'] = "C:/Users/jmmartin/.5 Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/data/proj"
+os.environ['PATH'] = "C:/Users/jmmartin/.5 Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/" + ";" + os.environ['PATH']
 
 #Nivedita's Path
 #GDAL_LIBRARY_PATH='C:/Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/gdal303.dll'
