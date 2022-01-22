@@ -5,6 +5,15 @@ from .models import Garden,Resource, ResourceBorrowing
 #Garden
 class GardenSerializer(GeoFeatureModelSerializer):
 
+    class Meta:
+        model = Garden
+        geo_field = 'geom_point'
+        fields = '__all__'
+       
+
+#Nearest Gardens
+class NearestGardenSerializer(GeoFeatureModelSerializer):
+
     distance = serializers.CharField(default='0')
 
     class Meta:
@@ -19,9 +28,8 @@ class GardenSerializer(GeoFeatureModelSerializer):
 class ResourceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resource
-        fields = ['resource_id', 'resource_status', 'resource_name', 
-                'category', 'date_created', 'return_date', 'garden'
-            ]
+        fields = '__all__' #Changed to solve the description's bug
+
 
 # ResourceBorrowing
 class ResourceBorrowingSerializer(serializers.ModelSerializer):
