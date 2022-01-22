@@ -1,4 +1,18 @@
+
+from django.http import response
 from django.shortcuts import render
+
+from django.template import RequestContext
+from django.http.response import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
+from rest_framework.parsers import JSONParser
+from rest_framework import status
+import requests
+from .models import Garden, Resource
+from .serializers import GardenSerializer, ResourceSerializer
+from django.urls import reverse
+from rest_framework.decorators import api_view
+import coreapi
+
 
 from django.http.response import JsonResponse
 from django.contrib.gis.db.models.functions import Distance
@@ -9,9 +23,17 @@ from rest_framework import status, viewsets
 from .models import Garden, Resource
 from .serializers import GardenSerializer, ResourceSerializer, NearestGardenSerializer
 
+
 from rest_framework.schemas import AutoSchema
 from rest_framework.views import APIView
 from rest_framework.exceptions import AuthenticationFailed
+import geocoding
+from django.shortcuts import render
+from django.http import  HttpResponse
+import urllib,json
+from geopy.geocoders import Nominatim
+from rest_framework.generics import ListAPIView
+from rest_framework_gis.filterset import GeoFilterSet        
 from rest_framework.decorators import action
 
 import coreapi
@@ -233,8 +255,13 @@ class GardenDetailViewPost(APIView):
             payload = jwt.decode(token, 'secret', algorithm=['HS256'])
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Unauthenticated!')
-
         garden_data = JSONParser().parse(request) 
+        location=[]
+        if len(str(garden_data["latitude"])) < 2 and len(str(garden_data["longitude"])) < 2:
+            garden_data["latitude"]=geocoding.geocoder[0]
+            garden_data["longitude"]=geocoding.geocoder[1]
+        garden_data["latitude"]=location[0]
+        garden_data["longitude"]=location[1]   
         garden_serializer = GardenSerializer(data=garden_data) 
         if garden_serializer.is_valid(): 
             garden_serializer.save() 
@@ -312,3 +339,4 @@ class ResourceDetailViewPost(APIView):
             resource_serializer.save() 
             return JsonResponse(resource_serializer.data) 
         return JsonResponse(resource_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+
