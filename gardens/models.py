@@ -1,5 +1,6 @@
 from django.contrib.gis.db import models
 from crops.models import Crop
+from users.models import User
 
 
 #Author: Javier Martin - 20/11/2021
@@ -20,7 +21,7 @@ class Garden(models.Model):
         ("GARDEN", "Garden"),
         ("RESOURCES", "Resources"))
     primary_purpose =  models.CharField(max_length=255, choices=PURPOSE_CHOICES, default="RESOURCES")
-    members = models.ManyToManyField('users.User', through='users.GardenMembership', related_name='gardens')
+    members = models.ManyToManyField(User, blank=True, related_name='gardens')
 
     def __str__(self):
         return self.name
