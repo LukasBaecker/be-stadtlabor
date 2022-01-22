@@ -1,10 +1,6 @@
 from django.conf.urls import url
 from .views import GardenView, GardenDetailView, GardenDetailViewPost, ResourceView, ResourceDetailView, ResourceDetailViewPost 
 from django.urls import path, include
-<<<<<<< HEAD:gardens/urls.py
-from django.urls import path
-=======
->>>>>>> origin/main:urbangarden/gardens/urls.py
 from rest_framework import routers
 
 
