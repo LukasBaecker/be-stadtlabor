@@ -1,3 +1,4 @@
+from xml.dom.pulldom import default_bufsize
 from django.db import models
 
 
@@ -9,6 +10,7 @@ class Crop(models.Model):
     description = models.TextField(max_length=500)
     characteristics = models.TextField(max_length=500)
     image = models.ImageField(upload_to='images/')
+    gardens=models.ManyToManyField('gardens.Garden')
     def __str__(self):
         return self.name
     

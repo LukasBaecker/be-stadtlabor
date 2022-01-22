@@ -1,7 +1,7 @@
 from math import nan
 from django.http import response
 from django.shortcuts import render
-
+from gardens import geocoding
 from django.template import RequestContext
 from django.http.response import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
 from rest_framework.parsers import JSONParser
@@ -13,7 +13,7 @@ from django.urls import reverse
 from rest_framework.decorators import api_view
 import coreapi
 
-
+from .models import Crop
 from django.http.response import JsonResponse
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
@@ -27,11 +27,10 @@ from .serializers import GardenSerializer, ResourceSerializer
 from rest_framework.schemas import AutoSchema
 from rest_framework.views import APIView
 from rest_framework.exceptions import AuthenticationFailed
-import geocoding
 from django.shortcuts import render
 from django.http import  HttpResponse
 import urllib,json
-from geopy.geocoders import Nominatim
+
 from rest_framework.generics import ListAPIView
 from rest_framework_gis.filterset import GeoFilterSet        
 from rest_framework.decorators import action
@@ -90,6 +89,7 @@ class GardenView(viewsets.ReadOnlyModelViewSet):
     schema =GardenViewSchema()
     serializer_class = GardenSerializer
     queryset = Garden.objects.all()
+    
  
     @action(detail=False, methods=['get'])
     def get_nearest_gardens(self, request):
