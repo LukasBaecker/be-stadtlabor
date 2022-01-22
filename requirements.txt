@@ -13,5 +13,6 @@ uritemplate==4.1.1
 pyyaml==6.0
 coreapi==2.3.3
 django-rest-swagger==2.2.0 
+geopy==2.2.0
 
 #python -m pip install -r requirements.txt
