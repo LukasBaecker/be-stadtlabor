@@ -264,3 +264,13 @@ class ResetPasswordView(APIView):
         })
 
 
+#Get users from the garden
+
+class UsersGardenView(APIView):
+    def get(self,request, pk):
+        user = User.objects.get(pk=pk)
+        user_serializer = UserSerializer(user)
+        return JsonResponse(user_serializer.data)
+        
+
+
