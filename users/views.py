@@ -37,11 +37,6 @@ class RegisterViewSchema(AutoSchema):
                     description= 'Personal email: Lotta-Meyer@email.com',
                     type='string'),
                 coreapi.Field(
-                    name = 'phone',
-                    required = True,
-                    description= 'Phone number with country code: +49 1 575123456',
-                    type='string'),
-                coreapi.Field(
                     name = 'garden',
                     required = True,
                     description= '[Garden id: 1 , 2 , 3 ...]',
@@ -127,11 +122,6 @@ class UserViewSchema(AutoSchema):
                     name = 'last_name',
                     required = True,
                     description= 'Meyer',
-                    type='string'),
-                coreapi.Field(
-                    name = 'phone',
-                    required = True,
-                    description= 'Phone number with country code: +49 1 575123456 ',
                     type='string'),
                 coreapi.Field(
                     name = 'garden',

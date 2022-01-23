@@ -10,7 +10,6 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, unique=True, null=False)
-    phone = models.CharField(max_length=255)
     date_created = models.DateTimeField(auto_now_add=True)
     username = None
     garden = models.ManyToManyField('gardens.Garden', blank=True)
