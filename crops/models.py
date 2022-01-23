@@ -3,6 +3,7 @@ from django.db import models
 
 
 #Author: Nivedita Vee - 20/11/2021
+# Reestablishing repository (01.23.2022)
 
 class Crop(models.Model):
     crop_id = models.AutoField(primary_key=True)
