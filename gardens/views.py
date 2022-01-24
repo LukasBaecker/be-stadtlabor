@@ -261,6 +261,8 @@ class GardenDetailViewPost(APIView):
             garden_data["longitude"]=geocoding.geocoder[1]
         garden_data["latitude"]=location[0]
         garden_data["longitude"]=location[1]   
+        if len(str(garden_data["latitude"])) > 2 and len(str(garden_data["longitude"])) > 2:
+            garden_data["geom_point"] = Point(float(garden_data["longitude"]),float(garden_data["latitude"]))
         garden_serializer = GardenSerializer(data=garden_data) 
         if garden_serializer.is_valid(): 
             garden_serializer.save() 

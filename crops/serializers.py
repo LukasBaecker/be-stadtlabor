@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Crop
+from crops.models import Crop
 
 class CropSerializer(serializers.ModelSerializer):
     class Meta:

@@ -164,7 +164,7 @@ REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS' : 'rest_framework.schemas.coreapi.AutoS
 #GEOS_LIBRARY_PATH='C:/Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/geos_c.dll'
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'\
+MEDIA_URL = '/media/'
 
 
 EMAIL_HOST = '0.0.0.0'
