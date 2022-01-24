@@ -5,7 +5,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed, APIException, NotFound
-from .serializers import UserSerializer, UserUpdateSerializer
+from .serializers import UserGardenSerializer, UserSerializer, UserUpdateSerializer
 from .models import User, PasswordReset
 import jwt, datetime, random, string
 import coreapi
@@ -269,7 +269,7 @@ class ResetPasswordView(APIView):
 class UsersGardenView(APIView):
     def get(self,request, pk):
         user = User.objects.get(pk=pk)
-        user_serializer = UserSerializer(user)
+        user_serializer = UserGardenSerializer(user)
         return JsonResponse(user_serializer.data)
         
 
