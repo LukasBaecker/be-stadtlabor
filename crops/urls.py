@@ -8,6 +8,7 @@ from crops import views
  
 urlpatterns = [ 
     url('', views.getcrops),
+    path('<pk>', CropDetailView.as_view()),
     
 ]
   
