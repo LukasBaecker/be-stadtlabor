@@ -6,11 +6,12 @@ from crops.views import *
 from django.conf.urls import url 
 from crops import views 
  
-urlpatterns = [ 
-    url('', views.getcrops),
-    path('<pk>', CropDetailView.as_view()),
-    
-]
+urlpatterns = [
+        path('all', CropView.as_view()),
+        path('<pk>', CropDetailView.as_view()),
+        
+  ]
+
   
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,
