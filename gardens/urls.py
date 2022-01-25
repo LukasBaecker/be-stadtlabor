@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import GardenView, GardenDetailView, GardenDetailViewPost, ResourceView, ResourceDetailView, ResourceDetailViewPost 
+from gardens.views import GardenView, GardenDetailView, GardenDetailViewPost, ResourceView, ResourceDetailView, ResourceDetailViewPost 
 from django.urls import path, include
 from rest_framework import routers
 
