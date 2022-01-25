@@ -20,8 +20,8 @@ class Garden(models.Model):
     PURPOSE_CHOICES = (
         ("GARDEN", "Garden"),
         ("RESOURCES", "Resources"))
-    primary_purpose =  models.CharField(max_length=255, choices=PURPOSE_CHOICES, default="RESOURCES")
-    members = models.ManyToManyField(User, blank=True, related_name='gardens')
+    primary_purpose =  models.CharField(max_length=250, choices=PURPOSE_CHOICES, default="RESOURCES")
+    members = models.ManyToManyField(User, null =True, blank=True, related_name='gardens')
 
     def __str__(self):
         return self.name

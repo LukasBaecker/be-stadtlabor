@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from math import nan
 from django.http import response
 from django.shortcuts import render
@@ -254,16 +255,19 @@ class GardenDetailViewPost(APIView):
             payload = jwt.decode(token, 'secret', algorithm=['HS256'])
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Unauthenticated!')
-        garden_data = JSONParser().parse(request) 
+
         location=[]
-        if len(str(garden_data["latitude"])) < 2 and len(str(garden_data["longitude"])) < 2:
-            garden_data["latitude"]=geocoding.geocoder[0]
-            garden_data["longitude"]=geocoding.geocoder[1]
-        garden_data["latitude"]=location[0]
-        garden_data["longitude"]=location[1]   
-        if len(str(garden_data["latitude"])) > 2 and len(str(garden_data["longitude"])) > 2:
-            garden_data["geom_point"] = Point(float(garden_data["longitude"]),float(garden_data["latitude"]))
-        garden_serializer = GardenSerializer(data=garden_data) 
+    
+        if len(str(request.data.get("latitude"))) < 2 and len(str(request.data.get("longitude"))) < 2:
+            request.data["latitude"]=geocoding.geocoder[0]
+            request.data["longitude"]=geocoding.geocoder[1]
+            request.data["latitude"]=location[0]
+            request.data["longitude"]=location[1]   
+        
+        if len(str(request.data.get("latitude"))) > 2 and len(str(request.data.get("longitude"))) > 2 or request.data.get("geom_point") is None:
+            request.data["geom_point"] = Point(float(request.data.get("longitude")),float(request.data.get("latitude"))) 
+        garden_serializer = GardenSerializer(data=request.data) 
+        
         if garden_serializer.is_valid(): 
             garden_serializer.save() 
             return JsonResponse(garden_serializer.data) 
