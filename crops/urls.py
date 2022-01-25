@@ -6,11 +6,13 @@ from crops.views import *
 from django.conf.urls import url 
 from crops import views 
  
+
 urlpatterns = [
         path('all', CropView.as_view()),
         path('<pk>', CropDetailView.as_view()),
         
   ]
+
 
   
 if settings.DEBUG:
