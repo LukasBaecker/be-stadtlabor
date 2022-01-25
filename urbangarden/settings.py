@@ -160,8 +160,8 @@ REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS' : 'rest_framework.schemas.coreapi.AutoS
 #os.environ['PATH'] = "C:/Users/jmmartin/.5 Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/" + ";" + os.environ['PATH']
 
 #Nivedita's Path
-GDAL_LIBRARY_PATH='C:/Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/gdal303.dll'
-GEOS_LIBRARY_PATH='C:/Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/geos_c.dll'
+#GDAL_LIBRARY_PATH='C:/Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/gdal303.dll'
+#GEOS_LIBRARY_PATH='C:/Citylab/be-stadtlabor/venv/Lib/site-packages/osgeo/geos_c.dll'
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
