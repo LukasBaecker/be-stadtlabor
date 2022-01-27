@@ -13,9 +13,7 @@ class Crop(models.Model):
     gardens=models.ManyToManyField('gardens.Garden')
     def __str__(self):
         return self.name
-    
-    class Meta:
-        ordering = 'name'
+
     
 
 
