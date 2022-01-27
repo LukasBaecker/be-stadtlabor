@@ -15,7 +15,7 @@ class Crop(models.Model):
         return self.name
     
     class Meta:
-        ordering = ('name')
+        ordering = 'name'
     
 
 
