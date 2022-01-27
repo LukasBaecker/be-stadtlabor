@@ -11,6 +11,10 @@ class Crop(models.Model):
     characteristics = models.TextField(max_length=500)
     image = models.ImageField(upload_to='images/')
     gardens=models.ManyToManyField('gardens.Garden')
+    
+    class Meta:
+        ordering = ('name', )
+    
     def __str__(self):
         return self.name
 
