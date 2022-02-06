@@ -74,6 +74,10 @@ The application can mainly be deployed in two ways i.e. Direct on a Linux Server
 ### Linux Server
 
 .....
+```bash
+ $ git clone  https://github.com/LukasBaecker/be-stadtlabor.git
+
+```
 
 ### Docker 
 
