@@ -42,6 +42,18 @@ Capabilities of the User service include apis to do the following :
 
 ......
 
+## Resource Service
+
+......
+
+## Event Service
+
+......
+
+## Crop Service
+
+......
+
 ## API Documentation
 
 The API documentation was done factoring in Open API specification standards, the url to the apis can be found here:
