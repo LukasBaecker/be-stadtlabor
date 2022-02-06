@@ -16,6 +16,10 @@ The Software achitecture overview is shown in the diagram below :
 The frontend codebase of this application can be found at:
 - https://github.com/LukasBaecker/fe-stadtlabor-studyproject 
 
+The Database Entity Relationship Diagram overview is shown in the diagram below : 
+
+![](readme-files/db-model.png)
+
 The backend part of the application was developed was developed in a Domain Driven Design and we can split it into :
 - User Service
 - Garden Service
@@ -60,3 +64,15 @@ The API documentation was done factoring in Open API specification standards, th
 - http://giv-project15.uni-muenster.de:8000/
 
 ![](readme-files/garden-up-api-docs.png)
+
+
+## Backend Deployment
+
+The application can mainly be deployed in two ways i.e. Direct on a Linux Server or Using Containerization i.e. Docker.
+
+....
+### Linux Server
+
+.....
+
+### Docker 
