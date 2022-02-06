@@ -18,7 +18,7 @@ The frontend codebase of this application can be found at:
 
 The Database Entity Relationship Diagram overview is shown in the diagram below : 
 
-![](readme-files/db-model.png)
+![](readme-files/db-erd-model.png)
 
 The backend part of the application was developed was developed in a Domain Driven Design and we can split it into :
 - User Service
@@ -76,3 +76,5 @@ The application can mainly be deployed in two ways i.e. Direct on a Linux Server
 .....
 
 ### Docker 
+
+......
