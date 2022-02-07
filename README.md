@@ -70,7 +70,6 @@ The API documentation was done factoring in Open API specification standards, th
 
 The application can mainly be deployed in two ways i.e. Direct on a Linux Server or Using Containerization i.e. Docker.
 
-....
 ### Linux Server
 
 .....
