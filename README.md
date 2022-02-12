@@ -1,4 +1,4 @@
-# Urban Gardening Backend Component (Garden Up Application)
+# Garden Up Backend Repository
 This is the backend of the whole City Lab project at IFGI - University of Münster. The project was carried out by Brian Pondi, Javier Martin, Jonas Hurst, Nivedita Vee & Lukas Bäcker. 
 The main purpose was to build an application that leads to the following benefits of urban gardening:
 - Community collaboration
