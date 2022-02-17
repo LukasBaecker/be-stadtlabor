@@ -52,11 +52,26 @@ Capabilities of the User service include apis to do the following :
 
 ## Event Service
 
-......
+Event Service data is also stored in Postgres. The service uses JWT for authentication. The service deals with the events which have taken place already and also the ones which are about to happen in the gardens of our application located in Muenster. The passwords are stored in the Database encrypted using Secure Hash Algorithm(SHA-256).
+
+Capabilities of the Event service include apis to do the following :
+
+- Get all the events of our application
+- Get a particular event based on the event id
+- Post an event to the application
+- Delete an event from the application
+- Update the details for the events
+
 
 ## Crop Service
+Crop Service data is stored in Postgres. The service uses JWT for authentication. The service includes details such as the name, description and some characteristics for the local crop varieties of Muenster, along with their pictures. It also includes some fruits. The passwords are stored in the Database encrypted using Secure Hash Algorithm(SHA-256).
 
-......
+Capabilities of the Crop service include apis to do the following :
+
+- Get all the crops of our application
+- Update the details for the crops
+- Find Gardens List that a Crop is part of
+
 
 ## API Documentation
 
