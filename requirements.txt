@@ -1,0 +1,18 @@
+asgiref==3.2.10
+Django==3.1
+django-filter==21.1
+djangorestframework==3.12.0
+djangorestframework-gis==0.17
+psycopg2-binary==2.9.2
+pytz==2021.3
+sqlparse==0.4.2
+pillow==8.4.0
+PyJWT==1.7.1 
+django-cors-headers==3.10.0
+uritemplate==4.1.1
+pyyaml==6.0
+coreapi==2.3.3
+django-rest-swagger==2.2.0 
+geopy==2.2.0
+
+#python -m pip install -r requirements.txt

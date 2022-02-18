@@ -1,0 +1,16 @@
+# docker-compose.yml
+version: '3'
+services:
+  database:
+    image: postgis/postgis:12-master 
+    env_file:
+      - database.env # configure postgres
+    volumes:
+      - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+    ports:
+      - "0.0.0.0:5445:5432"
+    restart: always
+    
+volumes:
+  database-data: # named volumes can be managed easier using docker-compose
+  
