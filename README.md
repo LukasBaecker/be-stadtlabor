@@ -72,6 +72,9 @@ Capabilities of the Crop service include apis to do the following :
 - Update the details for the crops
 - Find Gardens List that a Crop is part of
 
+## Geocoding Service
+Geocoding Service is implemented using Nominatim. It is only ignited when a user inputs garden details without using the UI pin tool to set up the lat lon attributes. The service will therefore use the address details to generate lat lon.
+
 
 ## API Documentation
 
@@ -87,12 +90,28 @@ The application can mainly be deployed in two ways i.e. Direct on a Linux Server
 
 ### Linux Server
 
-.....
+After logging into a linux server, you need to clone the repo
+
 ```bash
  $ git clone  https://github.com/LukasBaecker/be-stadtlabor.git
-
+```
+Move into the project directory:
+```bash
+ $ cd be-stadtlabor
+```
+Run the app on port "8000"
+```bash
+ $ screen -d -m python3 manage.py runserver 0.0.0.0:8000
 ```
 
 ### Docker 
 
-......
+Move into the project directory:
+```bash
+ $ cd be-stadtlabor
+```
+Then use docker compose to deploy a containerized application
+
+```bash
+ $ docker-compose up -d
+```
