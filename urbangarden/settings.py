@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'urbangarden.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': os.environ.get('POSTGIS_DB', default='gardening'),
+        'NAME': os.environ.get('POSTGIS_DB', default='urbangarden'),
         'USER': os.environ.get('POSTGIS_USER', default='postgres'),
         'PASSWORD': os.environ.get('POSTGIS_PASSWORD', default='password'),
         'HOST': os.environ.get('POSTGIS_SERVER', default='localhost'),

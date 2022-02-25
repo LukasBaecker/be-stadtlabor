@@ -1,15 +1,29 @@
 # docker-compose.yml
 version: '3'
 services:
-  database:
+  pgdatabase:
     image: postgis/postgis:12-master 
+    container_name: urbangarden-postgres
     env_file:
       - database.env # configure postgres
     volumes:
       - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
     ports:
-      - "0.0.0.0:5445:5432"
+      - "0.0.0.0:5432:5432"
     restart: always
+
+  garden-up:
+   build: .
+   container_name: urbangarden-backend
+   command: python manage.py runserver 0.0.0.0:8000
+   volumes:
+    - .:/code
+   ports:
+    - "8000:8000"
+   depends_on:
+    - pgdatabase
+  restart: always
+   
     
 volumes:
   database-data: # named volumes can be managed easier using docker-compose
