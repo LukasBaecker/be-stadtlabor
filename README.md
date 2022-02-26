@@ -44,11 +44,27 @@ Capabilities of the User service include apis to do the following :
 
 ## Garden Service 
 
-......
+Garden Service data is also stored in Postgres. The service uses JWT for authentication and deals with the creation of gardens in the app and management of their details. Details such as name, location, description, address, crops among others can be assigned and edit to every garden.  
+
+Capabilities of the Garden service include apis to do the following :
+
+- Get details of all gardens in our application
+- Get the details of a particular garden based on the id
+- Post a new garden into the application
+- Delete a garden from the application
+- Update the details of a garden
 
 ## Resource Service
 
-......
+Resource Service data is stored in Postgres. The service uses JWT for authentication and deals with the creation and assignation of a type of resource (tool, seeds, fertilizers etc.) to a particular garden. The resources could be set up as available for borrowing, borrowed or available for donation.  
+
+Capabilities of the Garden service include apis to do the following :
+
+- Get details of all gardens in our application
+- Get the details of a particular garden based on the id
+- Post a new garden into the application
+- Delete a garden from the application
+- Update the details of a garden
 
 ## Event Service
 
